@@ -3,7 +3,7 @@
 
 
 int main(int argc, char** argv) {
-    //TIPOS
+    int linhabosta = 1; //TIPOS DE BOSTA
     /*
      int - inteiro
      float - real
