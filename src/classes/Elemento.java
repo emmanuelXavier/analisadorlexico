@@ -18,5 +18,13 @@ public class Elemento {
     
     public void setLexema(String lexema){
         this.lexema = lexema;
+        
     }
+    
+    public String toString(){
+        return token + ", " + lexema;
+    }
+            
+    
+    
 }

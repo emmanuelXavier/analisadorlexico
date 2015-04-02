@@ -23,6 +23,7 @@ public class Main {
         AnalisadorLexico analisador = new AnalisadorLexico("main.c");
         try {
             analisador.analisar();
+            System.out.print(analisador.getTokens());
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Falha ao ler o arquivo.");
         }

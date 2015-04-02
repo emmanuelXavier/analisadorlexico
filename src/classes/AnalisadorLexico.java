@@ -20,6 +20,10 @@ public class AnalisadorLexico {
     private String palavra = "";
     private List delimitadores = new ArrayList();
     private boolean inComment = false;
+    private List operRelacionais = new ArrayList();
+    private List reservadas = new ArrayList();
+    private List operAtribuicao = new ArrayList();
+    private List<Elemento> tokens = new ArrayList<Elemento>();
     
     public AnalisadorLexico(String pathFile){
         try {
@@ -34,6 +38,45 @@ public class AnalisadorLexico {
             delimitadores.add("\n");
             delimitadores.add("{");
             delimitadores.add("}");
+            
+            operRelacionais.add("==");
+            operRelacionais.add("!=");
+            operRelacionais.add(">=");
+            operRelacionais.add("<=");
+            operRelacionais.add(">");
+            operRelacionais.add("<");
+            
+            operAtribuicao.add("=");
+            operAtribuicao.add("+=");
+            operAtribuicao.add("-=");
+            operAtribuicao.add("*=");
+            operAtribuicao.add("/=");
+            operAtribuicao.add("%=");
+            operAtribuicao.add("++");
+            operAtribuicao.add("--");
+            
+            reservadas.add("#include");
+            reservadas.add("<stdio.h>");
+            reservadas.add("void");
+            reservadas.add("int");
+            reservadas.add("char");
+            reservadas.add("float");
+            reservadas.add("long");
+            reservadas.add("double");
+            reservadas.add("_Bool");
+            reservadas.add("struct");
+            reservadas.add("typedef");
+            reservadas.add("if");
+            reservadas.add("else");
+            reservadas.add("while");
+            reservadas.add("do");
+            reservadas.add("for");
+            reservadas.add("return");
+            reservadas.add("break");
+            reservadas.add("switch");
+            reservadas.add("case");
+            reservadas.add("continue");
+            
             codigoFonte = new BufferedReader(new FileReader(pathFile));
         } catch (FileNotFoundException ex) {
             JOptionPane.showMessageDialog(null, "Arquivo não encontrado");
@@ -68,7 +111,7 @@ public class AnalisadorLexico {
                      
                     if (!inComment){ 
                         if ((!palavra.equals("")) && (!palavra.contains("/*")))
-                            JOptionPane.showMessageDialog(null, palavra);
+                            this.addToken(palavra);
                         //alinhar o token correspondente
                     }
                         palavra = "";
@@ -79,6 +122,41 @@ public class AnalisadorLexico {
             }
             
         }
+    }
+
+    private void addToken(String palavra) {
+        
+        if (operRelacionais.contains(palavra)){
+            Elemento elemento = new Elemento();
+            elemento.setToken("Operador Relacional");
+            elemento.setLexema(palavra);
+            tokens.add(elemento);
+            return;
+        }
+        
+        if (reservadas.contains(palavra)){
+            Elemento elemento = new Elemento();
+            elemento.setToken(palavra);
+            tokens.add(elemento);
+            return;
+        }
+        if (operAtribuicao.contains(palavra)){
+            Elemento elemento = new Elemento();
+            elemento.setToken("Operador Atribuição");
+            elemento.setLexema(palavra);
+            tokens.add(elemento);
+            return;
+        }
+        
+        
+            
+            
+    }
+    
+    
+    
+    public List<Elemento> getTokens(){
+        return tokens;
     }
     
     
