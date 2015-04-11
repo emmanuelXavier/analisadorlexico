@@ -1,5 +1,6 @@
 package classes;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +21,10 @@ public class AnalisadorLexico {
     private String palavra = "";
     private List delimitadores = new ArrayList();
     private boolean inComment = false;
+    private String numerica;
+    private String vareaveis;
+    private String literais;
+    private String funcoes;
     private List operRelacionais = new ArrayList();
     private List reservadas = new ArrayList();
     private List operAtribuicao = new ArrayList();
@@ -28,6 +33,10 @@ public class AnalisadorLexico {
     public AnalisadorLexico(String pathFile){
         try {
             int i = 10; 
+            
+            numerica = ("^\\d+\\.?\\d+");
+            vareaveis = ("^\\D\\w+");
+            literais = ("^\".*\"$");
             
             delimitadores.add(" ");
             delimitadores.add(",");
@@ -76,6 +85,9 @@ public class AnalisadorLexico {
             reservadas.add("switch");
             reservadas.add("case");
             reservadas.add("continue");
+            reservadas.add("printf");
+            
+             
             
             codigoFonte = new BufferedReader(new FileReader(pathFile));
         } catch (FileNotFoundException ex) {
@@ -125,7 +137,22 @@ public class AnalisadorLexico {
     }
 
     private void addToken(String palavra) {
+        if (palavra.matches(numerica)){
+            Elemento elemento = new Elemento();
+            elemento.setToken("numerico");
+            elemento.setLexema(palavra);
+            tokens.add(elemento);
+            return;
+        }
         
+        if (palavra.matches(literais)){
+            Elemento elemento = new Elemento();
+            elemento.setToken("literais");
+            elemento.setLexema(palavra);
+            tokens.add(elemento);
+            return;
+        }
+                   
         if (operRelacionais.contains(palavra)){
             Elemento elemento = new Elemento();
             elemento.setToken("Operador Relacional");
@@ -146,6 +173,16 @@ public class AnalisadorLexico {
             elemento.setLexema(palavra);
             tokens.add(elemento);
             return;
+        }
+        if(!palavra.equals(reservadas)){
+        if (palavra.matches(vareaveis)){
+            Elemento elemento = new Elemento();
+            elemento.setToken("vareaveis");
+            elemento.setLexema(palavra);
+            tokens.add(elemento);
+            return;
+        }
+        
         }
         
         
