@@ -33,7 +33,6 @@ public class AnalisadorLexico {
             numerica = ("^\\d+|^\\d+\\.?\\d+");
             identificador = ("^\\D\\w+|^\\D\\w?$");
             literais = ("^\".*\"$");
-            
             delimitadores.add(" ");
             delimitadores.add(",");
             delimitadores.add(";");
@@ -62,6 +61,7 @@ public class AnalisadorLexico {
             
             reservadas.add("#include");
             reservadas.add("<stdio.h>");
+
             reservadas.add("<stdlib.h>");
             reservadas.add("void");
             reservadas.add("int");
@@ -106,6 +106,7 @@ public class AnalisadorLexico {
         int nLine = 0;
         while (true){
             nLine++;
+
             linha = codigoFonte.readLine();
             if (linha == null)
                 break;
@@ -113,6 +114,7 @@ public class AnalisadorLexico {
             int size = linha.length();
             linha = linha.split("\r")[0];
             caractere = "";
+
             for (int i = 0; i < size;i++){
                 caractere = linha.substring(i,i+1);
                 if (delimitadores.contains(caractere)){
@@ -135,6 +137,7 @@ public class AnalisadorLexico {
                     if (!inComment){ 
                         if ((!palavra.equals("")) && (!palavra.contains("/*")))
                             this.addToken(palavra,nLine);
+
                         //alinhar o token correspondente
                     }
                         palavra = "";
@@ -186,21 +189,21 @@ public class AnalisadorLexico {
             return;
         }
         if(!palavra.equals(reservadas)){
-        if (palavra.matches(identificador)){
-            Elemento elemento = new Elemento();
-            elemento.setToken("IDENTIFICADOR");
-            elemento.setLexema(palavra);
-            tokens.add(elemento);
-            Simbolos simbolo = new Simbolos();
-            simbolo.setNome(palavra);
-            Simbolos.addSimbolo(simbolo);
-            return;
+            if (palavra.matches(identificador)){
+                Elemento elemento = new Elemento();
+                elemento.setToken("IDENTIFICADOR");
+                elemento.setLexema(palavra);
+                tokens.add(elemento);
+                Simbolos simbolo = new Simbolos();
+                simbolo.setNome(palavra);
+                Simbolos.addSimbolo(simbolo);
+                return;
+            }
+            
         }
         
-        }
-        
+
         Error erro = new ErrorLexico();
-        
         erro.setCodigo(101);
         erro.setDescricao("Identificador desconhecido: " + palavra);
         erro.setNomeArquivo(this.nomeArquivo);
@@ -214,5 +217,4 @@ public class AnalisadorLexico {
     public List<Elemento> getTokens(){
         return tokens;
     }
-    
 }

@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
  */
 public class Main {
 
-
     public static void main(String[] args) {
         AnalisadorLexico analisador = new AnalisadorLexico("main.c");
         try {
@@ -25,6 +24,7 @@ public class Main {
                 System.out.println(erro.showErrors());
             }
             System.out.println("\n\nTabela de símbolos\n" + Simbolos.getTabelaDeSimbolos());
+
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Falha ao ler o arquivo.");
         }

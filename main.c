@@ -3,6 +3,7 @@
 
 int main(int argc, char** argv) {
     int linhaTeste = 1; //TIPOS DE teste
+
     /*
      int - inteiro
      float - real
@@ -45,7 +46,6 @@ int main(int argc, char** argv) {
    // printf("%d\n",--x);
     printf("%d",x);
     comida = "arroz";
-
     return (EXIT_SUCCESS);
 }
 

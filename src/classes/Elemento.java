@@ -3,7 +3,7 @@ package classes;
 public class Elemento {
     private String token;
     private String lexema = "";
-    
+   
     public String getToken(){
         return token;
     }
@@ -27,4 +27,5 @@ public class Elemento {
         else
             return "< " + token + ", " + lexema + " >";
     }  
+
 }
