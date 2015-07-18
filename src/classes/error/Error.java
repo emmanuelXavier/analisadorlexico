@@ -2,7 +2,7 @@ package classes.error;
 
 import java.util.ArrayList;
 import java.util.List;
-
+ 
 public abstract class Error {
     private int codigo;
     private String descricao;
